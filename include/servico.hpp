@@ -1,23 +1,26 @@
 #ifndef SERVICO_HPP
 #define SERVICO_HPP
  
-#include "usuario.hpp"
+
 #include "funcionario.hpp"
+#include "sessao.hpp"
+#include "compra.hpp"
 #include <string>
 #include <map>
 
-class Servico : public Usuario{
+class Servico{
     private:
-    static std::map<long unsigned int, Funcionario*> _listaFuncionarios;
+    std::map<long unsigned int, Funcionario*> _Funcionarios;
+    std::map<long unsigned int, Sessao*> _Sessoes;
+    std::map<long unsigned int, Compra*> _Compras;
+    unsigned long int _idUsuario;
+    unsigned long int _idSessao;
+    unsigned long int _idCompra;
     public:
-    Servico();
-    Servico(std::string nome, std::string senha);
-    void cadastrarFuncionario(Funcionario* novoFuncionario);
-    void editarFuncionario(unsigned long int idFuncionario);
-    void demitirFuncionario(unsigned long int idFuncionario);
-    void mudarNome(unsigned long int idFuncionario);
-    void mudarSenha(unsigned long int idFuncionario);
-    void mudarCargo(unsigned long int idFuncionario);
+    Servico() : _idUsuario(0), _idSessao(0), _idCompra(0) {};
+    void cadastrarFuncionario(std::string nome, std::string senha, Cargos cargoFuncionario);
+    bool editarFuncionario(unsigned long int idFuncionario);
+    bool demitirFuncionario(unsigned long int idFuncionario);
     void mostrarFuncionarios(void);
     Cargos RealizarLogin(long unsigned int id, std::string senha);
 };

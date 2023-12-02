@@ -1,103 +1,76 @@
 #include "servico.hpp"
 
-std::map<long unsigned int, Funcionario*> Servico::_listaFuncionarios={{0,new Funcionario()}}; 
-
-Servico::Servico(){
-    _listaFuncionarios.insert(std::pair<unsigned long int, Funcionario*>((getId())-1, new Funcionario(GERENTE)));
-    //_listaFuncionarios.at(id)->exibirFuncionario();        
-    std::cout<<"GERENTE CADASTRADO COM SUCESSO!"<<std::endl;
+void Servico::cadastrarFuncionario(std::string nome, std::string senha, Cargos cargoFuncionario){
+    this->_Funcionarios.insert(std::make_pair(this->_idUsuario, new Funcionario(this->_idUsuario, nome, senha, cargoFuncionario)));
+    this->_Funcionarios.at(this->_idUsuario)->exibirFuncionario();        
+    std::cout<<"FUNCIONARIO CADASTRADO COM SUCESSO!"<<std::endl;
+    this->_idUsuario++;
 }
 
-Servico::Servico(std::string nome, std::string senha){
-        _listaFuncionarios.insert(std::pair<unsigned long int, Funcionario*>((getId())-1, new Funcionario(nome, senha, GERENTE)));
-        //_listaFuncionarios.at(id)->exibirFuncionario();        
-        std::cout<<"GERENTE CADASTRADO COM SUCESSO!"<<std::endl;
-}
-
-void Servico::cadastrarFuncionario(Funcionario* novoFuncionario){
-        _listaFuncionarios.insert(std::pair<unsigned long int, Funcionario*>(getId()-1, novoFuncionario));
-        //_listaFuncionarios.at(novoFuncionario->getId())->exibirFuncionario();        
-        std::cout<<"FUNCIONARIO CADASTRADO COM SUCESSO!"<<std::endl;
-}
-
-void Servico::demitirFuncionario(unsigned long int idFuncionario){
-    if(_listaFuncionarios.count(idFuncionario)==1){
-        //_listaFuncionarios.at(idFuncionario)->exibirFuncionario();  
-        _listaFuncionarios.erase(idFuncionario);
-        std::cout<<"FUNCIONARIO DEMITIDO COM SUCESSO!"<<std::endl;
-    }
-    else{
-        std::cout<<"ID NÃO ENCONTRADO, INSIRA UM VALIDO"<<std::endl;
-    }
-}
-
-void Servico::mudarNome(unsigned long int idFuncionario){
-    if(_listaFuncionarios.count(idFuncionario)==1){
-        std::string novoNome;
-        std::cout<<"INSIRA O NOVO NOME"<<std::endl;
-        getline(std::cin, novoNome);
-        _listaFuncionarios.at(idFuncionario)->alterarNome(novoNome);
-        std::cout<<"NOME ALTERADO COM SUCESSO!"<<std::endl;
-    }
-    else{
-        std::cout<<"ID NÃO ENCONTRADO, INSIRA UM VALIDO"<<std::endl;
-    }
-}
-void Servico::mudarSenha(unsigned long int idFuncionario){
-    if(_listaFuncionarios.count(idFuncionario)==1){
-        std::string novaSenha;
-        std::cout<<"INSIRA A NOVE SENHA"<<std::endl;
-        getline(std::cin, novaSenha);
-        _listaFuncionarios.at(idFuncionario)->alterarSenha(novaSenha);
-        std::cout<<"SENHA ALTERADA COM SUCESSO!"<<std::endl;
-    }
-    else{
-        std::cout<<"ID NÃO ENCONTRADO, INSIRA UM VALIDO"<<std::endl;
-    }
-}
-
-void Servico::mudarCargo(unsigned long int idFuncionario){
-    if(_listaFuncionarios.count(idFuncionario)==1){
-        int novoCargo;
-        std::cout<<"ESCOLHA O NOVO CARGO"<<std::endl;
-        std::cout<<"0.RETORNAR"<<std::endl;
-        if(_listaFuncionarios.at(idFuncionario)->getCargo()!=CAIXA){
-            std::cout<<"1.CAIXA"<<std::endl;
-        }
-        if(_listaFuncionarios.at(idFuncionario)->getCargo()!=ORGANIZADOR){
-            std::cout<<"2.ORGANIZADOR"<<std::endl;
-        }
-        if(_listaFuncionarios.at(idFuncionario)->getCargo()!=GERENTE){
-            std::cout<<"3.GERENTE"<<std::endl;
-        }
-        std::cin>>novoCargo;
-        if((novoCargo-1)!=_listaFuncionarios.at(idFuncionario)->getCargo()){
-            switch(novoCargo){
-                case 0:
-                    return ;
-                case 1:
-                    _listaFuncionarios.at(idFuncionario)->alterarCargo(CAIXA);
-                    std::cout<<"CARGO ATUALIZADO COM SUCESSO"<<std::endl;
-                    break;
-                case 2:
-                    _listaFuncionarios.at(idFuncionario)->alterarCargo(ORGANIZADOR);
-                    std::cout<<"CARGO ATUALIZADO COM SUCESSO"<<std::endl;
-                    break;
-                case 3:
-                    _listaFuncionarios.at(idFuncionario)->alterarCargo(GERENTE);
-                    std::cout<<"CARGO ATUALIZADO COM SUCESSO"<<std::endl;
-                    break;
-                default:
-                    std::cout<<"CARGO INVALIDO"<<std::endl;
+bool Servico::editarFuncionario(unsigned long int idFuncionario){
+    if(this->_Funcionarios.count(idFuncionario)==1){
+        this->_Funcionarios.at(this->_idUsuario)->exibirFuncionario();
+        unsigned short int resp;
+        do{
+            std::cout<<"QUAIS DADOS DESEJA ALTERAR?"<<std::endl;
+            std::cout<<"1. NOME\t4. NOME E SENHA"<<std::endl;
+            std::cout<<"2. SENHA\t5. NOME E CARGO"<<std::endl;
+            std::cout<<"3. CARGO\t6. SENHA E CARGO"<<std::endl;
+            std::cout<<"7. TODOS\t8. CANCELAR"<<std::endl;
+            std::cin>>resp;
+            if(resp==8){
+                std::cout<<"OPERAÇÃO CANCELADA"<<std::endl;
+                return false;
             }
+            if(resp<1||resp>7){
+                std::cout<<"ENTRADA INVALIDA"<<std::endl;
+            }
+        }while(resp<1||resp>7);
+        if(resp==1||resp==4||resp==5||resp==7){
+            std::string novoNome;
+            std::getline(std::cin, novoNome);
+            return this->_Funcionarios.at(idFuncionario)->alterarNome(novoNome);
         }
-        else{
-            std::cout<<"ENTRADA INVALIDA"<<std::endl;
+        if(resp==2||resp==4||resp==6||resp==7){
+            std::cout<<"NOVA SENHA";
+            std::string novaSenha;
+            std::cin>>novaSenha;
+            return this->_Funcionarios.at(idFuncionario)->alterarSenha(novaSenha);
+        }
+        if(resp==3||resp==5||resp==6||resp==7){
+            unsigned short int novoCargo;
+            std::cout<<"1. CAIXA\t3. GERENTE"<<std::endl;
+            std::cout<<"2. ORGANIZADOR\t4. SEM CARGO"<<std::endl;
+            std::cin>>novoCargo;
+            return this->_Funcionarios.at(idFuncionario)->alterarCargo(novoCargo);
         }
     }
-    else{
-        std::cout<<"ID NÃO ENCONTRADO, INSIRA UM VALIDO"<<std::endl;
+    std::cout<<"ID NÃO ENCONTRADO"<<std::endl;
+    return false;
+}
+
+bool Servico::demitirFuncionario(unsigned long int idFuncionario){
+    if(this->_Funcionarios.count(idFuncionario)==1){
+        unsigned short int resp;
+        this->_Funcionarios.at(idFuncionario)->exibirFuncionario();
+        do{
+            std::cout<<"DESEJA DEMITIR ESSE FUNCIONARIO?"<<std::endl;
+            std::cout<<"1. CONFIRMAR\t2. CANCELAR"<<std::endl;
+            std::cin>>resp;
+            if(resp==2){
+                std::cout<<"OPERAÇÃO CANCELADA"<<std::endl;
+                return false;
+            }
+            if(resp<1||resp>2){
+                std::cout<<"ENTRADA INVALIDA"<<std::endl;
+            }
+        }while(resp<1||resp>2);
+        this->_Funcionarios.erase(idFuncionario);
+        std::cout<<"FUNCIONARIO DEMITIDO COM SUCESSO!"<<std::endl;
+        return true;
     }
+    std::cout<<"ID NÃO ENCONTRADO, INSIRA UM VALIDO"<<std::endl;
+    return false;
 }
 
 void Servico::mostrarFuncionarios(void){
@@ -105,11 +78,11 @@ void Servico::mostrarFuncionarios(void){
     std::cout<<"--------------------------"<<std::endl;
     unsigned long int i=0;
     
-    for (std::multimap<unsigned long int,Funcionario*>::iterator it=_listaFuncionarios.begin(); it!=_listaFuncionarios.end(); ++it){
+    for (std::multimap<unsigned long int,Funcionario*>::iterator it=this->_Funcionarios.begin(); it!=this->_Funcionarios.end(); ++it){
         if(it->first!=0){
             std::cout<<"ID: "<<std::setfill('0')<<std::setw(5)<<it->first<<std::endl;
             it->second->exibirFuncionario();
-            if(i!=_listaFuncionarios.size()-1)
+            if(i!=this->_Funcionarios.size()-1)
                 std::cout<<"--------------------------"<<std::endl;
             i++;
         }
@@ -119,12 +92,10 @@ void Servico::mostrarFuncionarios(void){
 
 Cargos Servico::RealizarLogin(long unsigned int id, std::string senha){
     
-    if(_listaFuncionarios.count(id)==1){
-        if(senha==_listaFuncionarios.at(id)->getSenha()){
-            //std::cout<<"BEM VINDO "<<_listaFuncionarios.at(id)->getNome()<<"!"<<std::endl;
-
-            _listaFuncionarios.at(id)->exibirFuncionario();
-            return _listaFuncionarios.at(id)->getCargo();
+    if(this->_Funcionarios.count(id)==1){
+        if(senha==this->_Funcionarios.at(id)->getSenha()){
+            std::cout<<"BEM VINDO "<<this->_Funcionarios.at(id)->getNome()<<"!"<<std::endl;
+            return this->_Funcionarios.at(id)->getCargo();
         }
         else{
             std::cout<<"LOGIN OU SENHA INCORRETOS"<<std::endl;
