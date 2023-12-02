@@ -1,29 +1,19 @@
-#include "servico.hpp"
-#include "usuario.hpp"
-#include "funcionario.hpp"
+    // using ofstream constructors.
+#include <iostream>
+#include <fstream>  
+#include <iomanip>
+#include <sstream>
 
-int main(){
-    Cargos cargo_atual;
-    Sistema teste;
-    teste.cadastrarFuncionario(new Funcionario("arthur","reter", GERENTE));
-    teste.cadastrarFuncionario(new Funcionario("ricardo","reter", ORGANIZADOR));
-    teste.cadastrarFuncionario(new Funcionario("marcos","reter", CAIXA));
-    teste.mostrarFuncionarios();
-    do{
-        long unsigned int id;
-        std::cin>>id;
-        std::cout<<std::endl;y
-        std::string senha;
-        std::cin>>senha;
-        std::cout<<std::endl;
-        cargo_atual=teste.RealizarLogin(id, senha);
-        system("sleep 3");
-        system("clear");
-    }while(cargo_atual==SEM_CARGO);
-    teste.mostrarFuncionarios();
-    system("sleep 3");
-    system("clear");
-    teste.demitirFuncionario(3);
-    teste.mudarCargo(2);
-    teste.mostrarFuncionarios();
+int main() {
+std::stringstream os;
+    os<<"NOME: LUIS"<<std::endl;
+    os<<"EMAIL: LUIS.EDUARDOD2012@GMAIL.COM"<<std::endl;
+    os<<"IDADE: 20 anos"<<std::endl;
+    os<<"CPF: 022.218.156-70"<<std::endl;
+for(int i=0; i<4;i++){
+    std::ofstream outfile ("./recibos/compra #"+std::to_string(i)+".pdf");
+
+outfile << os.str();
+outfile.close();
+} 
 }
