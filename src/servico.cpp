@@ -1,26 +1,26 @@
-#include "sistema.hpp"
+#include "servico.hpp"
 
-std::map<long unsigned int, Funcionario*> Sistema::_listaFuncionarios={{0,new Funcionario()}}; 
+std::map<long unsigned int, Funcionario*> Servico::_listaFuncionarios={{0,new Funcionario()}}; 
 
-Sistema::Sistema(){
+Servico::Servico(){
     _listaFuncionarios.insert(std::pair<unsigned long int, Funcionario*>((getId())-1, new Funcionario(GERENTE)));
     //_listaFuncionarios.at(id)->exibirFuncionario();        
     std::cout<<"GERENTE CADASTRADO COM SUCESSO!"<<std::endl;
 }
 
-Sistema::Sistema(std::string nome, std::string senha){
+Servico::Servico(std::string nome, std::string senha){
         _listaFuncionarios.insert(std::pair<unsigned long int, Funcionario*>((getId())-1, new Funcionario(nome, senha, GERENTE)));
         //_listaFuncionarios.at(id)->exibirFuncionario();        
         std::cout<<"GERENTE CADASTRADO COM SUCESSO!"<<std::endl;
 }
 
-void Sistema::cadastrarFuncionario(Funcionario* novoFuncionario){
+void Servico::cadastrarFuncionario(Funcionario* novoFuncionario){
         _listaFuncionarios.insert(std::pair<unsigned long int, Funcionario*>(getId()-1, novoFuncionario));
         //_listaFuncionarios.at(novoFuncionario->getId())->exibirFuncionario();        
         std::cout<<"FUNCIONARIO CADASTRADO COM SUCESSO!"<<std::endl;
 }
 
-void Sistema::demitirFuncionario(unsigned long int idFuncionario){
+void Servico::demitirFuncionario(unsigned long int idFuncionario){
     if(_listaFuncionarios.count(idFuncionario)==1){
         //_listaFuncionarios.at(idFuncionario)->exibirFuncionario();  
         _listaFuncionarios.erase(idFuncionario);
@@ -31,7 +31,7 @@ void Sistema::demitirFuncionario(unsigned long int idFuncionario){
     }
 }
 
-void Sistema::mudarNome(unsigned long int idFuncionario){
+void Servico::mudarNome(unsigned long int idFuncionario){
     if(_listaFuncionarios.count(idFuncionario)==1){
         std::string novoNome;
         std::cout<<"INSIRA O NOVO NOME"<<std::endl;
@@ -43,7 +43,7 @@ void Sistema::mudarNome(unsigned long int idFuncionario){
         std::cout<<"ID NÃO ENCONTRADO, INSIRA UM VALIDO"<<std::endl;
     }
 }
-void Sistema::mudarSenha(unsigned long int idFuncionario){
+void Servico::mudarSenha(unsigned long int idFuncionario){
     if(_listaFuncionarios.count(idFuncionario)==1){
         std::string novaSenha;
         std::cout<<"INSIRA A NOVE SENHA"<<std::endl;
@@ -56,7 +56,7 @@ void Sistema::mudarSenha(unsigned long int idFuncionario){
     }
 }
 
-void Sistema::mudarCargo(unsigned long int idFuncionario){
+void Servico::mudarCargo(unsigned long int idFuncionario){
     if(_listaFuncionarios.count(idFuncionario)==1){
         int novoCargo;
         std::cout<<"ESCOLHA O NOVO CARGO"<<std::endl;
@@ -100,7 +100,7 @@ void Sistema::mudarCargo(unsigned long int idFuncionario){
     }
 }
 
-void Sistema::mostrarFuncionarios(void){
+void Servico::mostrarFuncionarios(void){
     std::cout<<std::endl<<"FUNCIONARIOS"<<std::endl;
     std::cout<<"--------------------------"<<std::endl;
     unsigned long int i=0;
@@ -117,7 +117,7 @@ void Sistema::mostrarFuncionarios(void){
     std::cout<<"****************************"<<std::endl<<std::endl;
 }
 
-Cargos Sistema::RealizarLogin(long unsigned int id, std::string senha){
+Cargos Servico::RealizarLogin(long unsigned int id, std::string senha){
     
     if(_listaFuncionarios.count(id)==1){
         if(senha==_listaFuncionarios.at(id)->getSenha()){

@@ -1,17 +1,17 @@
-#ifndef SISTEMA_HPP
-#define SISTEMA_HPP
+#ifndef SERVICO_HPP
+#define SERVICO_HPP
  
 #include "usuario.hpp"
 #include "funcionario.hpp"
 #include <string>
 #include <map>
 
-class Sistema : public Usuario{
+class Servico : public Usuario{
     private:
     static std::map<long unsigned int, Funcionario*> _listaFuncionarios;
     public:
-    Sistema();
-    Sistema(std::string nome, std::string senha);
+    Servico();
+    Servico(std::string nome, std::string senha);
     void cadastrarFuncionario(Funcionario* novoFuncionario);
     void editarFuncionario(unsigned long int idFuncionario);
     void demitirFuncionario(unsigned long int idFuncionario);
