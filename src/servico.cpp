@@ -1,5 +1,49 @@
 #include "servico.hpp"
 
+void validarCPF(std::string* cpf){
+    bool valido;
+    do{
+        valido=true;
+        std::cin>>*cpf;
+        if(cpf->size()==11){
+            unsigned int soma1=0;
+            for(short int i=8;i>=0;--i){
+                soma1+=(cpf->at(i)-48)*(10-i);
+            }
+            if(soma1%11==0||soma1&11==1){
+                if((cpf->at(9)-48)!=0){
+                    valido=false;
+                }
+            }
+            else{
+                if((cpf->at(9)-48)!=(11-soma1%11)){
+                    valido=false;
+                }
+            }
+            unsigned int soma2=0;
+            for(short int i=9;i>=0;--i){
+                soma2+=(cpf->at(i)-48)*(11-i);
+            }
+            if(soma2%11==0||soma2&11==1){
+                if((cpf->at(10)-48)!=0){
+                    valido=false;
+                }
+            }
+            else{
+                if((cpf->at(10)-48)!=(11-soma2%11)){
+                    valido=false;
+                }
+            }
+        }
+        else{
+            valido=false;
+        }
+        if(!valido){
+            std::cout<<"CPF INVALIDO"<<std::endl;
+        }
+    }while(!valido);
+}
+
 void Servico::cadastrarFuncionario(std::string nome, std::string senha, Cargos cargoFuncionario){
     this->_Funcionarios.insert(std::make_pair(this->_idUsuario, new Funcionario(this->_idUsuario, nome, senha, cargoFuncionario)));
     this->_Funcionarios.at(this->_idUsuario)->exibirFuncionario();        
