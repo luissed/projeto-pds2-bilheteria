@@ -39,8 +39,20 @@ bool Funcionario::alterarCargo(unsigned short int novoCargo){
     return true;
 }
 
+void Funcionario::atualizarVenda(double valorVenda){
+    this->_vendas+=valorVenda;
+}
+
+void Funcionario::resetarVenda(void){
+    this->_vendas=0;
+}
+
+double Funcionario::getVendas(void){
+    return this->_vendas;
+}
+
+
 void Funcionario::exibirFuncionario(void){
-    std::cout<<"ID: "<<this->_id<<std::endl;
     std::cout<<"NOME: "<<this->_nome<<std::endl;
     std::cout<<"CARGO: ";
     switch(this->_cargoFuncionario){
