@@ -22,8 +22,11 @@ class Compra{
     double _valorPagamento;
     public:
     Compra() : _quantidadeIngressos(0) {};
-    bool realizaCompra(Sessao* sessao);
-    void imprimirCompra(Cliente cliente, unsigned int id);
+    double realizaCompra(Sessao* sessao);
+    void imprimirCompra(Cliente* cliente, unsigned int id);
+    void imprimirCompra(std::string nome, std::string cpf, unsigned int id);
+    unsigned short int getQuantidadeIngressos(void);
+
 };
 
 #endif
