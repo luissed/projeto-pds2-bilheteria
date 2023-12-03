@@ -22,15 +22,24 @@ class Filme{
     CLASSIFICACAO _classificacao;
     std::string _genero;
     float _bilheteria;
+    bool _emCartaz;
     public:
+    Filme ():_emCartaz(true) {};
     Filme (int duracaoM, std::string titulo, CLASSIFICACAO classificacao, std::string genero);
     void atualizarBilheteria(double bilheteria);
+    bool alterarTitulo(std::string novoTitulo);
+    bool alterarDuracao(unsigned short int novaDuracaoM);
+    bool alterarClassificacao(unsigned short int novaClassificacao);
+    bool alterarGenero(std::string novoGenero);
     tm getDuracao(void);
     std::string getTitulo(void);
     CLASSIFICACAO getClassificacao(void);
     std::string getGenero(void);
+    bool getEmCartaz(void);
     float getBilheteria(void);
     void exibirFilme(void);
+    void liberarFilme(void);
+    Filme& operator=(const Filme &outra);
 };
 
 #endif
