@@ -1,5 +1,5 @@
 #include "compra.hpp"
-bool Compra::realizaCompra(Sessao* sessao){
+double Compra::realizaCompra(Sessao* sessao){
     unsigned short int aux;
     std::vector<unsigned short int> coluna;
     std::vector<unsigned short int> linha;
@@ -30,24 +30,37 @@ bool Compra::realizaCompra(Sessao* sessao){
     std::cout<<"1.SIM\t2.NÃO"<<std::endl;
     std::cin>>aux;
     if(aux==1){
-        for(unsigned long int i=0; i<_quantidadeIngressos;++i){
-            std::cin>>aux;
-            coluna.push_back(aux);
-            std::cin>>aux;
-            linha.push_back(aux);
-        }
+        do{
+            sessao->getSala().exibirSala();
+            coluna.clear();
+            linha.clear();
+            for(unsigned long int i=0; i<this->_quantidadeIngressos;++i){
+                std::cout<<"C";
+                std::cin>>aux;
+                coluna.push_back(aux);
+                std::cout<<"L";
+                std::cin>>aux;
+                linha.push_back(aux);
+            }
+        }while(!sessao->venderIngressos(coluna, linha));
     }
     else{
         std::cout<<"COMPRA CANCELADA"<<std::endl;
-        return false;
+        return 0;
     }
-    sessao->venderIngressos(coluna, linha);
-    return true;
+    std::ofstream outfile ("./ingressos/#"+sessao->getFilme()->getTitulo()+".txt");
+    outfile << "INGRESSOS COMPRADOS: "<<this->_quantidadeIngressos<<std::endl;
+
+    for(unsigned long int i=0;i<coluna.size();++i){
+        outfile << "ASSENTO: L"<<linha.at(i)<<"C"<<coluna.at(i)<<std::endl;
+    }
+    outfile.close();
+    return this->_valorPagamento;
 }
 
-void Compra::imprimirCompra(Cliente cliente, unsigned int id){
+void Compra::imprimirCompra(Cliente* cliente, unsigned int id){
     std::ofstream outfile ("./recibos/compra #"+std::to_string(id)+".txt");
-    outfile << cliente.exibirCliente().str();
+    outfile << cliente->exibirCliente().str();
     outfile << "VALOR:" << _valorPagamento<<"R$"<<std::endl;
     outfile <<"PAGAMENTO: ";
     switch(this->_pagamento){
@@ -67,3 +80,31 @@ void Compra::imprimirCompra(Cliente cliente, unsigned int id){
     outfile.close();
 
 }
+
+void Compra::imprimirCompra(std::string nome, std::string cpf, unsigned int id){
+    std::ofstream outfile ("./recibos/compra #"+std::to_string(id)+".txt");
+    outfile <<"NOME: "<<nome<<std::endl;
+    outfile <<"CPF: "<<cpf<<std::endl;
+    outfile << "VALOR:" << _valorPagamento<<"R$"<<std::endl;
+    outfile <<"PAGAMENTO: ";
+    switch(this->_pagamento){
+        case PIX:
+            outfile <<"PIX"<<std::endl;
+        break;
+        case DEBITO:
+            outfile <<"DEBITO"<<std::endl;
+        break;
+        case CREDITO:
+            outfile <<"CREDITO"<<std::endl;
+        break;
+        case DINHEIRO:
+            outfile <<"DINHEIRO"<<std::endl;
+        break;
+    }
+    outfile.close();
+}
+
+unsigned short int Compra::getQuantidadeIngressos(void){
+    return this->_quantidadeIngressos;
+}
+
