@@ -1,0 +1,6 @@
+NOME: 
+EMAIL: luis.eduardod2012@gmail.com
+IDADE: 19 anos
+CPF: 000.000.000-0
+VALOR:40R$
+PAGAMENTO: PIX
