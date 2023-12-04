@@ -34,7 +34,7 @@ int main() {
                 std::cin.ignore();
                 std::cout << "Pressione Enter para continuar...";
                 std::cin.get();
-                system("clear");
+                std::cout<<"\033[2J\033[H"<<std::endl;
                 std::cout<<"MENU GERENTE"<<std::endl;
                 std::cout<<"a. cadastro funcionario\tb. editar funcionario\tc. demitir funcionario"<<std::endl;
                 std::cout<<"d. mostrar funcionario\te. cadastrar sala \tf. mostrar todas salas"<<std::endl;
@@ -125,7 +125,7 @@ int main() {
                 std::cin.ignore();
                 std::cout << "Pressione Enter para continuar...";
                 std::cin.get();
-                system("clear");
+                std::cout<<"\033[2J\033[H"<<std::endl;
                 std::cout<<"MENU ORGANIZADOR"<<std::endl;
                 std::cout<<"a. cadastro filme\tb. editar filme\tc. retirar filme do cartaz"<<std::endl;
                 std::cout<<"d. mostrar filmes em cartaz\te. mostrar todos filmes \tf. criar sessao"<<std::endl;
@@ -232,7 +232,7 @@ int main() {
                 std::cin.ignore();
                 std::cout << "Pressione Enter para continuar...";
                 std::cin.get();
-                system("clear");
+                std::cout<<"\033[2J\033[H"<<std::endl;
                 std::cout<<"MENU CAIXA"<<std::endl;
                 std::cout<<"a. cadastro cliente\tb. exibir sessoes\tc. realizar venda"<<std::endl;
                 std::cout<<"l. logout"<<std::endl;

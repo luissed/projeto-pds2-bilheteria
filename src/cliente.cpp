@@ -22,6 +22,6 @@ std::stringstream Cliente::exibirCliente(void){
     os<<"NOME: "<<this->_nome<<std::endl;
     os<<"EMAIL: "<<this->_email<<std::endl;
     os<<"IDADE: "<<this->_idade<<" anos"<<std::endl;
-    os<<"CPF: "<<this->_cpf.substr(0,2)<<"."<<this->_cpf.substr(3,5)<<"."<<this->_cpf.substr(6,9)<<"-"<<this->_cpf.substr(10,11)<<std::endl;
+    os<<"CPF: "<<this->_cpf.substr(0,3)<<"."<<this->_cpf.substr(3,3)<<"."<<this->_cpf.substr(6,3)<<"-"<<this->_cpf.substr(10,2)<<std::endl;
     return os;
 }
