@@ -98,10 +98,10 @@ O relatório mensal somente é atualizado mensalmente!
 
 # Contato
 Dúvidas podem ser retiradas por meio dos e-mails:
-luised@ufmg.br - Luis Eduardo
-jpcopelli@ufmg.br - João Copelli
-jrfn@ufmg.br - José Roberto
-sabatini@ufmg.br - Vitor Samuel
+luised@ufmg.br - Luis Eduardo.
+jpcopelli@ufmg.br - João Copelli.
+jrfn@ufmg.br - José Roberto.
+sabatini@ufmg.br - Vitor Samuel.
 
 # Banco de dados
 Não conseguimos implementar um banco de dados, então o programa deve ser contínuo!
