@@ -8,11 +8,11 @@ TEST_CASE("teste compra - criar compra"){
     Filme filme(130, "amanhecer violento", _18, "comedia");
     time_t agora=time(nullptr);
     struct tm* horario=localtime(&agora);
-    Sessao sessao(sala, &filme, *horario);
+    Sessao sessao(&sala, &filme, *horario);
     Cliente cliente("luis", "luis@gmail.com", 18, "1231123301");
     Compra compra;
     CHECK(compra.realizaCompra(&sessao));
     CHECK_FALSE(compra.realizaCompra(&sessao));
-    compra.imprimirCompra(cliente, 0);
+    compra.imprimirCompra(&cliente,0);
 
 }

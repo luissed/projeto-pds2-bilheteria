@@ -13,12 +13,6 @@ class Cliente{
     unsigned short int _idade;
     std::string _cpf;
     public:
-
-    /// @brief Inicializa um cliente com um nome, email, idade e CPF
-    /// @param nome Nome do cliente
-    /// @param email Email do cliente
-    /// @param idade Idade do cliente
-    /// @param cpf CPF do cliente
     Cliente(std::string nome, std::string email, unsigned short int idade, std::string cpf) :
     _nome(nome), _email(email), _idade(idade), _cpf(cpf) {};
     std::string getNome();

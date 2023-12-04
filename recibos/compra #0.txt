@@ -1,0 +1,6 @@
+NOME: luis
+EMAIL: luis@gmail.com
+IDADE: 18 anos
+CPF: 123.112.330-
+VALOR:24R$
+PAGAMENTO: PIX

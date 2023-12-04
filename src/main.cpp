@@ -6,10 +6,9 @@
 int main() {
     Servico servico;
     char opcao;
-    std::string titulo,genero,classificacao;
+    std::string titulo,genero,classificacao,id;
     std::string nome, senha, cargo, email, cpf;
-    unsigned int duracaoM, idade;
-    long unsigned int id, idFuncionario, idFilme, idSessao, idSala;
+    std::string idFuncionario, idFilme, idSessao, idSala, duracaoM, idade;
     time_t agora=time(nullptr);
     struct tm* hora_atual;
     struct tm horario;
@@ -25,22 +24,23 @@ int main() {
             servico.relatorioMensal();
         }
         std::cout<<"ID: ";
-        std::cin>>id;
+        validarId(&id);
         std::cout<<"SENHA: ";
         std::cin>>senha;
-        switch(servico.realizarLogin(id, senha)){
+        switch(servico.realizarLogin(std::stoi(id, NULL, 10), senha)){
             case GERENTE:
             do{
                 std::cin.ignore();
                 std::cout << "Pressione Enter para continuar...";
                 std::cin.get();
-                std::cout<<"\033[2J\033[H"<<std::endl;
+                std::cout << "\033[2J\033[H]]";
                 std::cout<<"MENU GERENTE"<<std::endl;
                 std::cout<<"a. cadastro funcionario\tb. editar funcionario\tc. demitir funcionario"<<std::endl;
                 std::cout<<"d. mostrar funcionario\te. cadastrar sala \tf. mostrar todas salas"<<std::endl;
                 std::cout<<"g. mostrar salas ativas\th. (des)habilitar sala\ti. editar sala"<<std::endl;
                 std::cout<<"l. logout"<<std::endl;
                 std::cin>>opcao;
+                std::cin.ignore();
                 switch (toupper(opcao)) {
                 case 'A':
                     std::cout<<"INSIRA OS DADOS DO FUNCIONARIO"<<std::endl;
@@ -69,14 +69,14 @@ int main() {
                 case 'B':
                     std::cout<<"INSIRA O ID DO FUNCIONARIO"<<std::endl;
                     std::cout<<"ID: ";
-                    std::cin>>idFuncionario;
-                    servico.editarFuncionario(idFuncionario);
+                    validarId(&idFuncionario);
+                    servico.editarFuncionario(std::stoi(idFuncionario, NULL, 10));
                 break;
                 case 'C':
                     std::cout<<"INSIRA O ID DO FUNCIONARIO"<<std::endl;
                     std::cout<<"ID: ";
-                    std::cin>>idFuncionario;
-                    servico.demitirFuncionario(idFuncionario);
+                    validarId(&idFuncionario);
+                    servico.demitirFuncionario(std::stoi(idFuncionario, NULL, 10));
                 break;
                 case 'D':
                     servico.mostrarFuncionarios();
@@ -85,7 +85,7 @@ int main() {
                     unsigned short int colunas, linhas, valorIngresso;
                     std::cout<<"INSIRA OS DADOS DA SALA"<<std::endl;
                     std::cout<<"NOME: ";
-                    std::cin>>nome;
+                    getline(std::cin, nome);
                     std::cout<<"COLUNAS: ";
                     std::cin>>colunas;
                     std::cout<<"LINHAS: ";
@@ -103,14 +103,14 @@ int main() {
                 case 'H':
                     std::cout<<"INSIRA O ID DA SALA"<<std::endl;
                     std::cout<<"ID: ";
-                    std::cin>>idSala;
-                    servico.habilitarSala(idSala);
+                    validarId(&idSala);
+                    servico.habilitarSala(std::stoi(idSala, NULL, 10));
                 break;
                 case 'I':
                     std::cout<<"INSIRA O ID DA SALA"<<std::endl;
                     std::cout<<"ID: ";
-                    std::cin>>idSala;
-                    servico.editarSala(idSala);
+                    validarId(&idSala);
+                    servico.editarSala(std::stoi(idSala, NULL, 10));
                 break;
                 case 'L':
                     std::cout << "LOGOUT" << std::endl;
@@ -125,57 +125,58 @@ int main() {
                 std::cin.ignore();
                 std::cout << "Pressione Enter para continuar...";
                 std::cin.get();
-                std::cout<<"\033[2J\033[H"<<std::endl;
+                std::cout << "\033[2J\033[H]]";
                 std::cout<<"MENU ORGANIZADOR"<<std::endl;
                 std::cout<<"a. cadastro filme\tb. editar filme\tc. retirar filme do cartaz"<<std::endl;
                 std::cout<<"d. mostrar filmes em cartaz\te. mostrar todos filmes \tf. criar sessao"<<std::endl;
                 std::cout<<"g. trocar sala\th. mostrar sessoes\ti. mostrar sessoes ativas"<<std::endl;
                 std::cout<<"j. mostrar salas ativas\tl. logout"<<std::endl;
                 std::cin>>opcao;
+                std::cin.ignore();
                 switch (toupper(opcao)) {
                 case 'A':
                     std::cout<<"INSIRA OS DADOS DO FILME"<<std::endl;
                     std::cout<<"TITULO: ";
                     getline(std::cin,titulo);
                     std::cout<<"DURACAO EM MINUTOS: ";
-                    std::cin>>duracaoM;
+                    validarId(&duracaoM);
                     std::cout<<"GENERO: ";
                     std::cin>>genero;
                     std::cout<<"CLASSIFICACAO: ";
                     std::cin>>classificacao;
                     switch (toupper(classificacao[1])) {
                     case 'I':
-                        servico.adicionarFilme(duracaoM, titulo, LIVRE, genero);
+                        servico.adicionarFilme(std::stoi(duracaoM, NULL, 10), titulo, LIVRE, genero);
                     break;
                     case '2':
-                        servico.adicionarFilme(duracaoM, titulo, _12, genero);
+                        servico.adicionarFilme(std::stoi(duracaoM, NULL, 10), titulo, _12, genero);
                     break;
                     case '4':
-                        servico.adicionarFilme(duracaoM, titulo, _14, genero);
+                        servico.adicionarFilme(std::stoi(duracaoM, NULL, 10), titulo, _14, genero);
                     break;
                     case '6':
-                        servico.adicionarFilme(duracaoM, titulo, _16, genero);
+                        servico.adicionarFilme(std::stoi(duracaoM, NULL, 10), titulo, _16, genero);
                     break;
                     case '8':
-                        servico.adicionarFilme(duracaoM, titulo, _18, genero);
+                        servico.adicionarFilme(std::stoi(duracaoM, NULL, 10), titulo, _18, genero);
                     break;
                     default:
                         std::cout << "CLASSIFICACAO INVALIDA." << std::endl;
-                        servico.adicionarFilme(duracaoM, titulo, LIVRE, genero);
+                        servico.adicionarFilme(std::stoi(duracaoM, NULL, 10), titulo, LIVRE, genero);
                     break;
                     }
                 break;
                 case 'B':
                     std::cout<<"INSIRA O ID DO FILME"<<std::endl;
                     std::cout<<"ID: ";
-                    std::cin>>idFilme;
-                    servico.editarFilme(idFilme);
+                    validarId(&idFilme);
+                    servico.editarFilme(std::stoi(idFilme, NULL, 10));
                 break;
                 case 'C':
                     std::cout<<"INSIRA O ID DO FILME"<<std::endl;
                     std::cout<<"ID: ";
-                    std::cin>>idFilme;
-                    servico.removerFilmeCartaz(idFilme);
+                    validarId(&idFilme);
+                    servico.removerFilmeCartaz(std::stoi(idFilme, NULL, 10));
                 break;
                 case 'D':
                     servico.exibirFilmesEmCartaz();
@@ -186,9 +187,9 @@ int main() {
                 case 'F':
                     std::cout<<"INSIRA OS ID'S DA SALA E DO FILME "<<std::endl;
                     std::cout<<"ID SALA: ";
-                    std::cin>>idSala;
+                    validarId(&idSala);
                     std::cout<<"ID FILME: ";
-                    std::cin>>idFilme;
+                    validarId(&idFilme);
                     std::cout<<"INSIRA O HORARIO "<<std::endl;
                     std::cout<<"ANO(YYYY): ";
                     std::cin>>horario.tm_year;
@@ -200,15 +201,15 @@ int main() {
                     std::cin>>horario.tm_hour;
                     std::cout<<"MINUTOS(M): ";
                     std::cin>>horario.tm_min;
-                    servico.criarSessao(idSala, idFilme, horario);
+                    servico.criarSessao(std::stoi(idSala, NULL, 10), std::stoi(idFilme, NULL, 10), horario);
                 break;
                 case 'G':
                     std::cout<<"INSIRA OS ID'S DA SALA E DA SESSAO "<<std::endl;
                     std::cout<<"ID SALA: ";
-                    std::cin>>idSala;
+                    validarId(&idSala);
                     std::cout<<"ID SESSAO: ";
-                    std::cin>>idSessao;
-                    servico.trocarSalaSessao(idSala, idSessao);
+                    validarId(&idSessao);
+                    servico.trocarSalaSessao(std::stoi(idSala, NULL, 10), std::stoi(idSala, NULL, 10));
                 break;
                 case 'H':
                     servico.exibirSessoes();
@@ -232,11 +233,12 @@ int main() {
                 std::cin.ignore();
                 std::cout << "Pressione Enter para continuar...";
                 std::cin.get();
-                std::cout<<"\033[2J\033[H"<<std::endl;
+                std::cout << "\033[2J\033[H]]";
                 std::cout<<"MENU CAIXA"<<std::endl;
                 std::cout<<"a. cadastro cliente\tb. exibir sessoes\tc. realizar venda"<<std::endl;
                 std::cout<<"l. logout"<<std::endl;
                 std::cin>>opcao;
+                std::cin.ignore();
                 switch (toupper(opcao)) {
                 case 'A':
                     std::cout<<"INSIRA OS DADOS DO CLIENTE"<<std::endl;
@@ -245,10 +247,10 @@ int main() {
                     std::cout<<"EMAIL: ";
                     std::cin>>email;
                     std::cout<<"IDADE: ";
-                    std::cin>>idade;
+                    validarId(&idade);
                     std::cout<<"CPF: ";
                     validarCPF(&cpf);
-                    servico.adicionarCliente(nome, email, idade, cpf);
+                    servico.adicionarCliente(nome, email, std::stoi(idade, NULL, 10), cpf);
                 break;
                 case 'B':
                     servico.exibirSessoesFilmes();
@@ -261,8 +263,8 @@ int main() {
                     validarCPF(&cpf);
                     std::cout<<"INSIRA O ID DA SESSAO"<<std::endl;
                     std::cout<<"ID SESSAO: ";
-                    std::cin>>idSessao;
-                    servico.venderIngressos(id, idSessao, nome, cpf);
+                    validarId(&idSessao);
+                    servico.venderIngressos(std::stoi(id, NULL, 10), std::stoi(idSala, NULL, 10), nome, cpf);
                 break;
                 case 'L':
                     std::cout << "LOGOUT" << std::endl;

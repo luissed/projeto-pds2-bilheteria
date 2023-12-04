@@ -39,11 +39,11 @@ testeServico: funcionario sala filme sessao cliente compra servico
 	$(CC) $(CFLAGS) src/testeServico.cpp build/funcionario.o build/sala.o build/filme.o build/sessao.o build/cliente.o build/compra.o build/servico.o -o teste/testeServico
 # Modifique a funcao main
 build: test run
-test: testeFuncionario testeFilme testeSala testeCliente testeSessao
+test: testeFuncionario testeFilme testeSala testeCliente testeSessao testeCompra testeServico
 
 run: funcionario filme sala cliente sessao compra servico 
 	$(CC) $(CFLAGS) build/funcionario.o build/filme.o build/sala.o build/cliente.o build/sessao.o build/compra.o build/servico.o src/main.cpp -o $(TARGET)
 	
 #	@clear
 clean:
-	$(RM) -r $(BUILDDIR)/* $(TARGET)
+	$(RM) -r $(BUILDDIR)/* $(TARGET)

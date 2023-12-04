@@ -56,5 +56,6 @@ class Servico{
 };
 
 void validarCPF(std::string* cpf);
+void validarId(std::string* id);
 
 #endif
